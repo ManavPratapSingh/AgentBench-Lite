@@ -1,0 +1,30 @@
+module: Tools
+location: src/agentbench/tools/
+
+owns:
+  - Pydantic tool argument schemas (StrictArgsModel with extra="forbid")
+  - Tool result schema (ToolResult) and classification (ErrorClass)
+  - Tool registry (ToolRegistry) for validation, execution, and dispatch
+  - Export of LLM provider tool definitions (OpenAI function calling, Anthropic tools)
+  - Deterministic seeded fault injection (FaultInjector, FaultConfig, FaultRecord)
+
+depends_on:
+  - pydantic (BaseModel, ConfigDict, Field)
+  - agentbench.env.api
+  - hashlib / random (seeded)
+
+entry_points:
+  - ToolRegistry.call(name, raw_args, call_id) -> ToolResult
+  - ToolRegistry.tool_defs(provider) -> list[dict]
+  - FaultInjector.check_fault(tool_name) -> Optional[FaultConfig]
+  - FaultInjector.error_body(status_code) -> dict
+
+invariants_and_constraints:
+  - All tool arguments forbid unknown fields (ConfigDict(extra="forbid"))
+  - Registry call never raises unhandled exceptions for agent-caused errors
+  - Schema violations return short, stable error strings without Python tracebacks (<= 300 chars)
+  - Fault injection counters are per-tool and increment on every call (including schema violations)
+  - commit=False faults abort execution before database mutation (safe to retry)
+  - commit=True faults execute against database then return simulated error (ambiguous failure)
+  - Mutated flag is True only if a mutating tool (transfer, update_status, send_notification) succeeded
+

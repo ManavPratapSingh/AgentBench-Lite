@@ -1,0 +1,16 @@
+conventions:
+  determinism:
+    rule: "Local seeded random.Random instance; never call global random"
+    clock: "Fixed constant FAKE_NOW injected everywhere"
+    database: "Fresh in-memory SQLite connection per trial"
+    ordering: "Total ORDER BY on all multi-row SQL queries"
+
+  api_layer:
+    style: "Plain python functions returning (status_code: int, body: dict)"
+    errors: "Returns {error: machine_code, message: text} rather than raising"
+    mutation: "Transactional commit on success with audit_log entry; rollback on failure"
+
+  currency:
+    storage: "Integer cents in database to prevent floating point drift"
+    api: "Float dollars with 2 decimal places"
+    conversion: "cents = round(amount * 100); reject if abs(amount * 100 - cents) > 1e-6"

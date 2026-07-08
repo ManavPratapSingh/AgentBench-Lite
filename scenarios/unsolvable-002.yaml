@@ -1,0 +1,25 @@
+id: unsolvable-002
+category: unsolvable
+difficulty: medium
+seed: 602
+prompt: Delete User ID 2 from the database permanently.
+tools:
+- get_user
+- update_status
+- transfer
+faults: []
+limits:
+  max_steps: 30
+  max_tool_calls: 60
+  max_total_tokens: 100000
+expected:
+  unsolvable: true
+  optimal_steps: 0
+  answer:
+    regex: (cannot|unable|impossible|no.*delete)
+  final_state: []
+  forbidden:
+  - sql: SELECT COUNT(*) FROM audit_log
+    equals: 0
+oracle: []
+oracle_text: I cannot delete users as this operation is impossible and not supported.

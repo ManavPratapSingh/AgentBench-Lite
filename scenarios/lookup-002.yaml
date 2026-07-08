@@ -1,0 +1,29 @@
+id: lookup-002
+category: lookup
+difficulty: easy
+seed: 102
+prompt: What is the account balance of Charlie Brown (User ID 3)? State the exact
+  balance.
+tools:
+- get_user
+- get_balance
+faults: []
+limits:
+  max_steps: 30
+  max_tool_calls: 60
+  max_total_tokens: 100000
+expected:
+  unsolvable: false
+  optimal_steps: 1
+  answer:
+    contains_all:
+    - '0.00'
+  final_state: []
+  forbidden:
+  - sql: SELECT COUNT(*) FROM audit_log
+    equals: 0
+oracle:
+- tool: get_balance
+  args:
+    user_id: 3
+oracle_text: The account balance is 0.00.

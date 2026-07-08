@@ -1,0 +1,25 @@
+{
+  "scenario_id": "fault-001",
+  "trial": 0,
+  "prompt": "Get balance of user 1 and notify user 2.",
+  "termination_reason": "final_answer",
+  "steps": [
+    {
+      "step": 2,
+      "agent_turn": {
+        "text": "Notification sent.",
+        "tool_calls": []
+      },
+      "tool_calls": [
+        {
+          "tool": "send_notification",
+          "arguments": {"user_id": 2, "message": "Balance check"},
+          "status": 200,
+          "error_class": "OK",
+          "result": {"notification_id": 5}
+        }
+      ]
+    }
+  ]
+}
+

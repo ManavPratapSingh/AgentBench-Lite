@@ -1,0 +1,16 @@
+current_phase: Phase 1 (Deterministic Environment)
+status: completed
+recently_modified_modules:
+  - src/agentbench/env/clock.py
+  - src/agentbench/env/db.py
+  - src/agentbench/env/seed.py
+  - src/agentbench/env/api.py
+  - tests/unit/test_env.py
+
+current_assumptions:
+  - In-memory SQLite with PRAGMA foreign_keys = ON is sufficient for full trial isolation.
+  - Money represented as integer cents internally and float dollars externally.
+  - FAKE_NOW constant ensures 100% time determinism.
+
+next_step:
+  - Phase 2: Tool layer (Pydantic schemas, validation, registry error classification, seeded fault injector).

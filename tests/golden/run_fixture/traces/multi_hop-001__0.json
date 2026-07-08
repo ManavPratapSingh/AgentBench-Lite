@@ -1,0 +1,25 @@
+{
+  "scenario_id": "multi_hop-001",
+  "trial": 0,
+  "prompt": "Find the highest balance user and transfer 10 dollars to user 2.",
+  "termination_reason": "final_answer",
+  "steps": [
+    {
+      "step": 3,
+      "agent_turn": {
+        "text": "Transfer complete.",
+        "tool_calls": []
+      },
+      "tool_calls": [
+        {
+          "tool": "transfer",
+          "arguments": {"from_user_id": 3, "to_user_id": 2, "amount": 10.0},
+          "status": 200,
+          "error_class": "OK",
+          "result": {"transaction_id": 10}
+        }
+      ]
+    }
+  ]
+}
+

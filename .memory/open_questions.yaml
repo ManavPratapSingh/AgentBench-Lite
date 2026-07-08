@@ -1,0 +1,4 @@
+- question: "Should ToolRegistry wrap raw api.py functions directly or instantiate a stateful wrapper?"
+  context: "Phase 2 tool registry design will determine how DB connections and allowed tools are passed."
+- question: "Which LLM provider adapter should be implemented first in Phase 3?"
+  context: "OpenAI vs Anthropic API - OpenAI format is standard across most local mocks."

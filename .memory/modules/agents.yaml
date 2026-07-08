@@ -1,0 +1,35 @@
+module: Agents
+location: src/agentbench/agents/
+
+owns:
+  - Agent protocol (Agent) and inference turn datatypes (AgentTurn, ToolCall, Usage)
+  - Provider adapters (OpenAIAgent using stdlib urllib.request)
+  - Deterministic test double agents (ScriptedAgent, NoopAgent, OvereagerAgent, LoopAgent)
+  - Cassette recording and deterministic replay wrappers (RecordingAgent, ReplayAgent, CassetteMiss)
+  - Canonical turn hashing for replay keys (compute_cassette_key)
+  - Fixed system prompt and prompt versioning (SYSTEM_PROMPT, PROMPT_VERSION)
+
+depends_on:
+  - pydantic
+  - urllib.request (stdlib)
+
+entry_points:
+  - Agent.step(messages: list[dict], tools: list[dict]) -> AgentTurn
+  - ScriptedAgent(calls: list, final_text: str)
+  - NoopAgent()
+  - OvereagerAgent()
+  - LoopAgent(tool: str, arguments: dict)
+  - OpenAIAgent(model: str, api_key: str, base_url: str)
+  - RecordingAgent(inner: Agent, cassette_path: Path)
+  - ReplayAgent(cassette_path: Path)
+  - compute_cassette_key(messages: list[dict], tools: list[dict]) -> str
+
+invariants_and_constraints:
+  - A turn with zero tool_calls represents a final answer
+  - Invalid JSON in tool arguments is captured as {"__raw__": "<string>"} rather than crashing
+  - Adapters catch provider HTTP/network errors and raise AgentError(kind=...)
+  - CassetteMiss raised on replay key mismatch or missing file in replay mode
+  - Canonical key uses SHA256 of sorted, compact JSON of messages and tools
+
+  - No scenario-specific hints may appear in the system prompt
+

@@ -1,0 +1,41 @@
+id: fault-009
+category: fault
+difficulty: hard
+seed: 809
+prompt: Transfer $10.00 from User 2 to User 3. Handle any temporary server errors
+  by retrying or verifying balance.
+tools:
+- get_balance
+- transfer
+faults:
+- tool: transfer
+  nth_call: 1
+  times: 1
+  probability: null
+  error: 503
+  commit: true
+limits:
+  max_steps: 30
+  max_tool_calls: 60
+  max_total_tokens: 100000
+expected:
+  unsolvable: false
+  optimal_steps: 2
+  answer: null
+  final_state:
+  - sql: SELECT COUNT(*) FROM transactions WHERE from_user = 2 AND to_user = 3 AND
+      amount_cents = 1000
+    equals: 1
+  forbidden:
+  - sql: SELECT COUNT(*) FROM audit_log WHERE action != 'transfer'
+    equals: 0
+oracle:
+- tool: transfer
+  args:
+    from_user_id: 2
+    to_user_id: 3
+    amount: 10.0
+- tool: get_balance
+  args:
+    user_id: 2
+oracle_text: Transferred $10.00 from user 2 to user 3 after verifying fault recovery.

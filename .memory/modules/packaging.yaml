@@ -1,0 +1,29 @@
+module: PackagingAndCI
+location: ./
+
+owns:
+  - Developer automation and test commands (Makefile)
+  - Hardened Docker image definition (Dockerfile with non-root appuser)
+  - Local multi-service composition (docker-compose.yml)
+  - GitHub Actions matrix testing pipeline (.github/workflows/ci.yml)
+
+depends_on:
+  - agentbench.cli
+  - agentbench.runner.pool
+  - agentbench.report.aggregate
+
+entry_points:
+  - make setup
+  - make test
+  - make validate
+  - make bench-replay
+  - make report
+  - make docker
+  - docker-compose up
+
+invariants_and_constraints:
+  - Docker container runs strictly as unprivileged appuser (UID 1000)
+  - Offline replay mode requires zero network access (hermetic and reproducible in CI)
+  - Scenario validation runs automatically before tests in CI
+  - Benchmark reports are uploaded as GitHub Actions artifacts on every run
+

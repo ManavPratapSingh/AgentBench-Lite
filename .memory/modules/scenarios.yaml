@@ -1,0 +1,28 @@
+module: Scenarios
+location: src/agentbench/scenarios/
+
+owns:
+  - Scenario schema (Scenario, ScenarioLimits, ScenarioExpected)
+  - Scenario loader and directory scanner (load_scenario, load_scenario_dir)
+  - Strict validator (validate_scenario) checking §10.2 constraints
+  - Deterministic generator (generate_scenario_set, write_scenarios_to_disk)
+
+depends_on:
+  - pyyaml
+  - pydantic
+  - agentbench.env.seed
+  - agentbench.agents.scripted
+  - agentbench.runner.loop
+
+entry_points:
+  - load_scenario(path) -> Scenario
+  - load_scenario_dir(dir_path) -> list[Scenario]
+  - validate_scenario(scenario) -> list[str]
+  - generate_scenario_set(seed_val, count) -> list[Scenario]
+
+invariants_and_constraints:
+  - Every scenario must have a ScriptedAgent oracle that passes it 100%
+  - NoopAgent must fail every solvable scenario
+  - OvereagerAgent must fail every unsolvable and trap scenario
+  - Expected values must be computed by independent SQL on the seeded DB, never by running tools
+

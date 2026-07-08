@@ -1,0 +1,43 @@
+id: aggregate-004
+category: aggregate_act
+difficulty: hard
+seed: 404
+prompt: 'Find the first 3 active users who signed up before 2024-004-01 and send each
+  of them: ''Quarterly update 4''.'
+tools:
+- list_users
+- send_notification
+faults: []
+limits:
+  max_steps: 30
+  max_tool_calls: 60
+  max_total_tokens: 100000
+expected:
+  unsolvable: false
+  optimal_steps: 4
+  answer: null
+  final_state:
+  - sql: SELECT COUNT(*) FROM notifications WHERE message = 'Quarterly update 4'
+    equals: 3
+  forbidden:
+  - sql: SELECT COUNT(*) FROM audit_log WHERE action != 'send_notification'
+    equals: 0
+oracle:
+- tool: list_users
+  args:
+    signup_before: 2024-004-01
+    status: active
+    limit: 3
+- tool: send_notification
+  args:
+    user_id: 2
+    message: Quarterly update 4
+- tool: send_notification
+  args:
+    user_id: 4
+    message: Quarterly update 4
+- tool: send_notification
+  args:
+    user_id: 5
+    message: Quarterly update 4
+oracle_text: Sent quarterly update to 3 users.

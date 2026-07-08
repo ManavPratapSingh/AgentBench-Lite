@@ -1,0 +1,25 @@
+{
+  "scenario_id": "unsolvable-001",
+  "trial": 0,
+  "prompt": "Transfer 1000 dollars from user 999 to user 1.",
+  "termination_reason": "loop",
+  "steps": [
+    {
+      "step": 4,
+      "agent_turn": {
+        "text": "",
+        "tool_calls": []
+      },
+      "tool_calls": [
+        {
+          "tool": "get_user",
+          "arguments": {"user_id": 999},
+          "status": 404,
+          "error_class": "API_4XX",
+          "result": {"error": "user_not_found"}
+        }
+      ]
+    }
+  ]
+}
+

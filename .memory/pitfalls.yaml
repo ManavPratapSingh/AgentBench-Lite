@@ -1,0 +1,15 @@
+sqlite_determinism:
+  pitfall: "Unordered SELECT queries return indeterminate row order across SQLite versions and operations."
+  prevention: "Every SELECT query returning multiple rows must include an explicit total ORDER BY clause."
+
+prng_isolation:
+  pitfall: "Calling global random.* pollutes state across tests and trials."
+  prevention: "Instantiate random.Random(seed) locally and pass explicitly; never use global random."
+
+clock_drift:
+  pitfall: "Using datetime.now() leaks host system time into DB rows and assertions."
+  prevention: "Import FAKE_NOW from agentbench.env.clock for all record timestamps."
+
+transaction_safety:
+  pitfall: "Mutating tools failing mid-operation might leave partial state changes or uncommitted audit records."
+  prevention: "Wrap mutations in try/except with rollback, and write audit_log within the same transaction."

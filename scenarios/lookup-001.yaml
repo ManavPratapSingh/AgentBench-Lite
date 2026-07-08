@@ -1,0 +1,28 @@
+id: lookup-001
+category: lookup
+difficulty: easy
+seed: 101
+prompt: What is the account balance of Diana Prince (User ID 4)? State the exact balance.
+tools:
+- get_user
+- get_balance
+faults: []
+limits:
+  max_steps: 30
+  max_tool_calls: 60
+  max_total_tokens: 100000
+expected:
+  unsolvable: false
+  optimal_steps: 1
+  answer:
+    contains_all:
+    - '0.37'
+  final_state: []
+  forbidden:
+  - sql: SELECT COUNT(*) FROM audit_log
+    equals: 0
+oracle:
+- tool: get_balance
+  args:
+    user_id: 4
+oracle_text: The account balance is 0.37.

@@ -1,0 +1,25 @@
+{
+  "scenario_id": "lookup-001",
+  "trial": 0,
+  "prompt": "What is the status of user 1?",
+  "termination_reason": "final_answer",
+  "steps": [
+    {
+      "step": 1,
+      "agent_turn": {
+        "text": "User 1 is active.",
+        "tool_calls": []
+      },
+      "tool_calls": [
+        {
+          "tool": "get_user",
+          "arguments": {"user_id": 1},
+          "status": 200,
+          "error_class": "OK",
+          "result": {"id": 1, "status": "active"}
+        }
+      ]
+    }
+  ]
+}
+

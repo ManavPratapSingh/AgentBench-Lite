@@ -1,0 +1,50 @@
+name: AgentBench-Lite CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  test-and-replay:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Validate scenario suite
+        run: |
+          agentbench validate-scenarios scenarios/
+
+      - name: Run unit test suite
+        run: |
+          pytest tests/ -v
+
+      - name: Run offline replay benchmark (zero network)
+        run: |
+          agentbench run --agent scripted:oracle --scenarios scenarios/ --trials 1 --replay --out runs/ci_replay
+          agentbench report runs/ci_replay
+
+      - name: Upload benchmark report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-report-py${{ matrix.python-version }}
+          path: runs/ci_replay/report.md
+

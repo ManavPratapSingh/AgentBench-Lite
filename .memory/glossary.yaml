@@ -1,0 +1,20 @@
+Scenario:
+  meaning: "A declarative task specification including prompt, seed, allowed tools, faults, and expected outcome."
+
+Trial:
+  meaning: "A single execution run of one scenario by one agent."
+
+Oracle:
+  meaning: "A known-correct sequence of tool calls that solves a scenario."
+
+MutatingTool:
+  meaning: "A tool that alters database state (transfer, update_status, send_notification) and logs to audit_log."
+
+AuditLog:
+  meaning: "An append-only database table tracking every successful state-mutating action taken during a trial."
+
+Cassette:
+  meaning: "A serialized recording of an LLM turn keyed by a deterministic SHA-256 hash of the request parameters."
+
+StateGrading:
+  meaning: "Evaluating agent success by comparing final database state via SQL assertions, avoiding LLM judges."

@@ -1,0 +1,30 @@
+module: Graders
+location: src/agentbench/graders/
+
+owns:
+  - State and answer grader (grade_state_and_answer, StateGradeResult)
+  - Step efficiency and redundant call calculator (grade_efficiency)
+  - Contract violation and hallucinated ID auditor (grade_contracts, ContractGradeResult)
+  - Fault recovery metric calculator (grade_recovery)
+  - Deterministic failure taxonomy classifier (classify_failure)
+
+depends_on:
+  - sqlite3
+  - re
+  - agentbench.runner.trace
+  - agentbench.scenarios.schema
+
+entry_points:
+  - grade_state_and_answer(conn, scenario, trace) -> StateGradeResult
+  - grade_efficiency(scenario, trace, passed) -> tuple[Optional[float], int]
+  - grade_contracts(scenario, trace) -> ContractGradeResult
+  - grade_recovery(scenario, trace, state_pass) -> tuple[int, int, Optional[float]]
+  - classify_failure(scenario, trace, state_res, contract_res, faults_fired, faults_recovered) -> Optional[str]
+
+invariants_and_constraints:
+  - Success is evaluated purely by database state diffs and invariant checks, never by an LLM judge
+  - All SQL queries executed by graders are read-only SELECT statements
+  - Efficiency is defined only for passed trials; failed trials report None
+  - Redundant calls count identical read signatures without intervening state mutation
+  - Failure taxonomy applies a 9-rung priority hierarchy where first match wins
+

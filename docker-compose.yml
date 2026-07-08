@@ -1,0 +1,12 @@
+services:
+  agentbench:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: agentbench-lite:latest
+    container_name: agentbench-lite
+    volumes:
+      - ./runs:/app/runs
+      - ./cassettes:/app/cassettes
+    command: ["run", "--agent", "scripted:oracle", "--scenarios", "scenarios/", "--trials", "1", "--replay", "--out", "runs/docker_replay"]
+

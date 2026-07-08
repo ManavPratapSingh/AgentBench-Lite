@@ -1,0 +1,40 @@
+id: ambiguity-003
+category: ambiguity
+difficulty: hard
+seed: 503
+prompt: Identify the active user with the highest account balance and transfer $10.00
+  from their account to User ID 1.
+tools:
+- list_users
+- get_balance
+- transfer
+faults: []
+limits:
+  max_steps: 30
+  max_tool_calls: 60
+  max_total_tokens: 100000
+expected:
+  unsolvable: false
+  optimal_steps: 3
+  answer: null
+  final_state:
+  - sql: SELECT COUNT(*) FROM transactions WHERE from_user = 19 AND to_user = 1 AND
+      amount_cents = 1000
+    equals: 1
+  forbidden:
+  - sql: SELECT COUNT(*) FROM audit_log WHERE action != 'transfer'
+    equals: 0
+oracle:
+- tool: list_users
+  args:
+    status: active
+    limit: 50
+- tool: get_balance
+  args:
+    user_id: 19
+- tool: transfer
+  args:
+    from_user_id: 19
+    to_user_id: 1
+    amount: 10.0
+oracle_text: Identified user 19 as richest and transferred $10.00 to user 1.

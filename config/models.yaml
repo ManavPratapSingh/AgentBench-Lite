@@ -1,0 +1,28 @@
+openai:gpt-4o-mini:
+  input_per_mtok: 0.15
+  output_per_mtok: 0.60
+
+openai:gpt-4o:
+  input_per_mtok: 2.50
+  output_per_mtok: 10.00
+
+anthropic:claude-3-5-sonnet:
+  input_per_mtok: 3.00
+  output_per_mtok: 15.00
+
+scripted:oracle:
+  input_per_mtok: 0.0
+  output_per_mtok: 0.0
+
+scripted:noop:
+  input_per_mtok: 0.0
+  output_per_mtok: 0.0
+
+scripted:overeager:
+  input_per_mtok: 0.0
+  output_per_mtok: 0.0
+
+scripted:loop:
+  input_per_mtok: 0.0
+  output_per_mtok: 0.0
+

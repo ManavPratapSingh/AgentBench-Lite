@@ -1,0 +1,62 @@
+system:
+  name: AgentBench-Lite
+  goal: Deterministic Multi-Turn Tool-Use & Agent Evaluation Harness
+  language: Python 3.11+
+  core_dependencies:
+    - pydantic
+    - pyyaml
+    - typer
+    - sqlite3 (stdlib)
+
+components:
+  environment:
+    owns:
+      - schema definition and table constraints
+      - seed-deterministic in-memory database creation
+      - injected immutable fake clock
+      - mock REST API tools (read and mutating)
+    depends_on:
+      - sqlite3
+    exposes:
+      - seed(seed: int) -> sqlite3.Connection
+      - dump(conn: sqlite3.Connection) -> str
+      - FAKE_NOW constant
+      - tool implementations in agentbench.env.api
+
+  tool_layer:
+    status: planned (Phase 2)
+    owns:
+      - pydantic argument validation
+      - error classification (OK, SCHEMA_VIOLATION, UNKNOWN_TOOL, API_4XX, API_5XX)
+      - deterministic seeded fault injection
+
+  agents:
+    status: planned (Phase 3)
+    owns:
+      - provider adapters (OpenAI / Anthropic)
+      - scripted agents (oracle, noop, overeager, loop)
+      - record/replay cassettes
+
+  runner:
+    status: planned (Phase 3/5)
+    owns:
+      - step limit and loop detection
+      - execution loop
+      - trace generation
+
+  graders:
+    status: planned (Phase 4)
+    owns:
+      - SQL final-state evaluation
+      - forbidden side-effect checks
+      - efficiency, contract, and recovery metrics
+      - failure taxonomy
+
+request_flow:
+  - Scenario (YAML)
+  - Runner
+  - Agent Turn (emits tool calls)
+  - Tool Registry (Pydantic validation -> Fault Injector -> Mock API)
+  - SQLite (in-memory per trial)
+  - Graders (evaluates DB diff & trace)
+  - Result JSONL & Report Markdown

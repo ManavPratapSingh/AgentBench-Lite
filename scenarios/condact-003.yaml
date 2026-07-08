@@ -1,0 +1,34 @@
+id: condact-003
+category: conditional_act
+difficulty: medium
+seed: 303
+prompt: 'Check the balance of user 34. If their balance is at least $100.00, send
+  them the notification: ''Security review alert #3''.'
+tools:
+- get_balance
+- send_notification
+faults: []
+limits:
+  max_steps: 30
+  max_tool_calls: 60
+  max_total_tokens: 100000
+expected:
+  unsolvable: false
+  optimal_steps: 2
+  answer: null
+  final_state:
+  - sql: 'SELECT COUNT(*) FROM notifications WHERE user_id = 34 AND message = ''Security
+      review alert #3'''
+    equals: 1
+  forbidden:
+  - sql: SELECT COUNT(*) FROM audit_log WHERE action != 'send_notification'
+    equals: 0
+oracle:
+- tool: get_balance
+  args:
+    user_id: 34
+- tool: send_notification
+  args:
+    user_id: 34
+    message: 'Security review alert #3'
+oracle_text: Checked balance and sent notification to user 34.

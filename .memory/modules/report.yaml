@@ -1,0 +1,28 @@
+module: Report
+location: src/agentbench/report/
+
+owns:
+  - Statistical calculations: Wilson 95% score confidence intervals, pass@k, pass^k, nearest-rank percentiles
+  - Benchmark run aggregation: parsing results.jsonl and manifest.json into structured RunSummary
+  - Markdown report generation: formatted 6-section report.md documents
+  - Run comparison: delta tables, regressions (pass->fail), and improvements (fail->pass)
+
+depends_on:
+  - agentbench.runner.pool
+
+entry_points:
+  - wilson_ci(successes: int, total: int, confidence: float = 0.95) -> tuple[float, float]
+  - pass_at_k(n: int, c: int, k: int) -> float
+  - pass_power_k(n: int, c: int, k: int) -> float
+  - percentile(data: Sequence[float], p: float) -> float
+  - aggregate_run(run_dir: Path) -> RunSummary
+  - generate_markdown_report(summary: RunSummary) -> str
+  - compare_runs(run_a_dir: Path, run_b_dir: Path) -> str
+
+invariants_and_constraints:
+  - Excludes harness_errors from pass rate and efficiency evaluations
+  - Computes pass@k and pass^k per scenario before averaging across scenarios
+  - Uses exact nearest-rank percentiles for latency p50, p95, p99
+  - Markdown report conforms strictly to 6-section specification in SPEC §12.2
+  - Golden snapshot test in tests/golden/run_fixture guarantees report format stability
+

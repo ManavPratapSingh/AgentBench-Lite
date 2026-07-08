@@ -1,0 +1,33 @@
+id: multihop-001
+category: multi_hop
+difficulty: medium
+seed: 201
+prompt: Find the most recent transaction partner for George Clark (User ID 7) and
+  report their name.
+tools:
+- get_user
+- get_transactions
+faults: []
+limits:
+  max_steps: 30
+  max_tool_calls: 60
+  max_total_tokens: 100000
+expected:
+  unsolvable: false
+  optimal_steps: 2
+  answer:
+    contains_all:
+    - Karen Filippelli
+  final_state: []
+  forbidden:
+  - sql: SELECT COUNT(*) FROM audit_log
+    equals: 0
+oracle:
+- tool: get_transactions
+  args:
+    user_id: 7
+    limit: 1
+- tool: get_user
+  args:
+    user_id: 37
+oracle_text: The most recent transaction partner is Karen Filippelli.
