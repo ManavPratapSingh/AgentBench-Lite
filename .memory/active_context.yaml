@@ -1,16 +1,16 @@
-current_phase: Phase 1 (Deterministic Environment)
+current_phase: Phase 2 (Tool Layer: Schemas, Validation & Faults)
 status: completed
 recently_modified_modules:
-  - src/agentbench/env/clock.py
-  - src/agentbench/env/db.py
-  - src/agentbench/env/seed.py
-  - src/agentbench/env/api.py
-  - tests/unit/test_env.py
+  - src/agentbench/tools/models.py
+  - src/agentbench/tools/faults.py
+  - src/agentbench/tools/registry.py
+  - src/agentbench/tools/__init__.py
+  - tests/unit/test_tools.py
 
 current_assumptions:
-  - In-memory SQLite with PRAGMA foreign_keys = ON is sufficient for full trial isolation.
-  - Money represented as integer cents internally and float dollars externally.
-  - FAKE_NOW constant ensures 100% time determinism.
+  - Pydantic models with extra="forbid" cleanly detect all hallucinated arguments.
+  - Safe faults (commit=False) fail before SQL execution; ambiguous faults (commit=True) execute SQL then return simulated 500/503.
+  - Seed-derived SHA256 PRNG ensures 100% deterministic fault injection.
 
 next_step:
-  - Phase 2: Tool layer (Pydantic schemas, validation, registry error classification, seeded fault injector).
+  - Phase 3: Agent interface + the runner loop (AgentTurn protocol, ScriptedAgent, OpenAI adapter, execution loop with loop & step limits).

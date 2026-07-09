@@ -24,11 +24,19 @@ components:
       - tool implementations in agentbench.env.api
 
   tool_layer:
-    status: planned (Phase 2)
+    status: completed (Phase 2)
     owns:
-      - pydantic argument validation
+      - pydantic argument validation with extra="forbid"
       - error classification (OK, SCHEMA_VIOLATION, UNKNOWN_TOOL, API_4XX, API_5XX)
-      - deterministic seeded fault injection
+      - single source of truth provider schema export (OpenAI, Anthropic)
+      - deterministic seeded fault injection (safe and ambiguous modes)
+    depends_on:
+      - environment
+      - pydantic
+    exposes:
+      - ToolRegistry
+      - ToolResult, ErrorClass
+      - FaultInjector, FaultConfig
 
   agents:
     status: planned (Phase 3)
@@ -60,3 +68,4 @@ request_flow:
   - SQLite (in-memory per trial)
   - Graders (evaluates DB diff & trace)
   - Result JSONL & Report Markdown
+

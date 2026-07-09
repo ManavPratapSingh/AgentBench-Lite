@@ -190,4 +190,3 @@ def test_fault_injection_probabilistic_determinism():
     assert seq1 == seq2
     # Different seed -> different fault pattern
     assert seq1 != seq3
-

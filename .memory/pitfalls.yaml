@@ -13,3 +13,12 @@ clock_drift:
 transaction_safety:
   pitfall: "Mutating tools failing mid-operation might leave partial state changes or uncommitted audit records."
   prevention: "Wrap mutations in try/except with rollback, and write audit_log within the same transaction."
+
+pydantic_extra_fields:
+  pitfall: "By default, Pydantic silently ignores unmodeled arguments, allowing agents to pass hallucinated arguments without penalty."
+  prevention: "Set model_config = ConfigDict(extra='forbid') on all tool argument models."
+
+fault_counter_scope:
+  pitfall: "Fault counters must track all calls to a tool, even schema-invalid ones, otherwise an agent's retry timing shifts."
+  prevention: "Increment call_counts[tool_name] unconditionally on every invocation before returning SCHEMA_VIOLATION."
+

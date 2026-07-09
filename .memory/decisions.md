@@ -19,3 +19,18 @@
 - **Decision:** Store `balance_cents` and `amount_cents` in integer cents; convert to/from float dollars at the API boundary with strict validation.
 - **Trade-offs:** Extra conversion step in tools, but guarantees exact balances and clean SQLite CHECK constraints.
 - **Status:** Active
+
+### D-004: Pydantic Single Source of Truth for Tool Defs & Validation
+- **Context:** LLMs require provider-specific JSON schemas (e.g. OpenAI function calling, Anthropic tool definitions), while tool execution requires type and bounds validation. Maintaining separate schemas invites drift.
+- **Decision:** Define one Pydantic model (`StrictArgsModel`) per tool with `extra="forbid"`. Automatically generate OpenAI/Anthropic schemas via `model_json_schema()` and validate incoming agent arguments against the same class.
+- **Alternatives Considered:** Manual JSON schema dicts + jsonschema validator; raw python type annotations.
+- **Trade-offs:** Pydantic is an external dependency, but eliminates schema drift and outputs standard JSON Schema.
+- **Status:** Active
+
+### D-005: Dual Fault Modes (Safe vs Ambiguous)
+- **Context:** In real distributed architectures, network/server errors can occur before processing (safe to retry) or after committing (retrying causes double-spend/duplication).
+- **Decision:** Support `commit: false` (pre-execution failure) and `commit: true` (execute SQL, then return 500/503).
+- **Alternatives Considered:** Only pre-execution failures (cannot test agent idempotency or state verification).
+- **Trade-offs:** Ambiguous failures require agents to verify database state before retrying, making scenario evaluation realistic.
+- **Status:** Active
+

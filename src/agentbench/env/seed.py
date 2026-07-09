@@ -119,3 +119,4 @@ def seed(seed_val: int) -> sqlite3.Connection:
 def dump(conn: sqlite3.Connection) -> str:
     """Return canonical text dump of SQLite database."""
     return "\n".join(conn.iterdump())
+

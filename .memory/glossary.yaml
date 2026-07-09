@@ -17,4 +17,14 @@ Cassette:
   meaning: "A serialized recording of an LLM turn keyed by a deterministic SHA-256 hash of the request parameters."
 
 StateGrading:
-  meaning: "Evaluating agent success by comparing final database state via SQL assertions, avoiding LLM judges."
+  meaning: "Evaluating agent correctness by comparing final database state via SQL assertions, avoiding LLM judges."
+
+SchemaViolation:
+  meaning: "An error raised when agent tool arguments violate the Pydantic type model or contain extra unmodeled fields."
+
+ErrorClass:
+  meaning: "Closed enum classifying every tool call into OK, SCHEMA_VIOLATION, UNKNOWN_TOOL, API_4XX, or API_5XX."
+
+AmbiguousFault:
+  meaning: "A fault with commit=true where database mutation succeeds but the tool returns a simulated 500/503."
+

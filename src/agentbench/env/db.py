@@ -50,3 +50,4 @@ def init_db(conn: sqlite3.Connection) -> None:
     # ponytail: in-memory sqlite with foreign keys enabled
     conn.execute("PRAGMA foreign_keys = ON;")
     conn.executescript(SCHEMA_SQL)
+

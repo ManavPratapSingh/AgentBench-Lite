@@ -14,3 +14,14 @@ conventions:
     storage: "Integer cents in database to prevent floating point drift"
     api: "Float dollars with 2 decimal places"
     conversion: "cents = round(amount * 100); reject if abs(amount * 100 - cents) > 1e-6"
+
+  validation:
+    layer: "Pydantic models with extra='forbid' generate JSON schemas for LLMs"
+    error_format: "Concise field-path: message string without Python stack traces"
+    containment: "Schema failures returned as normal tool results, never raising to agent"
+
+  fault_injection:
+    mode: "Explicit declaration in scenario YAML via nth_call or probability"
+    determinism: "SHA256(scenario_seed:tool:count) seeds isolated random.Random"
+    semantics: "commit=False aborts before SQL; commit=True executes then reports error"
+

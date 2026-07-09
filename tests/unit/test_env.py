@@ -347,3 +347,4 @@ def test_send_notification():
         assert res["error"] == "user_closed"
     finally:
         conn.close()
+

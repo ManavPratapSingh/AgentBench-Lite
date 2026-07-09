@@ -11,3 +11,11 @@ It replaces brittle and expensive LLM-as-judge grading with exact SQLite state a
   - Isolated seeded PRNG (`random.Random(seed)`).
   - 7 REST-like mock tools (`list_users`, `get_user`, `get_balance`, `get_transactions`, `transfer`, `update_status`, `send_notification`).
   - Atomic transactions with audit logging for mutating actions.
+
+- **Tool Layer (Phase 2)**:
+  - Pydantic models for argument schemas (`extra="forbid"`).
+  - Provider schema export (`tool_defs(provider="openai"|"anthropic")`).
+  - Tool classification into closed `ErrorClass` (`OK`, `SCHEMA_VIOLATION`, `UNKNOWN_TOOL`, `API_4XX`, `API_5XX`).
+  - Deterministic seeded fault injection with per-tool call counters, support for `commit: false` and `commit: true` ambiguous failures.
+  - Zero unhandled exceptions returned to callers on agent mistakes.
+

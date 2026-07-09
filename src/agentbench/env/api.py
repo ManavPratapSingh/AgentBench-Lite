@@ -335,3 +335,4 @@ def send_notification(
         raise
 
     return 200, {"notification_id": notif_id}
+
