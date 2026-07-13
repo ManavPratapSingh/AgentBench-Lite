@@ -38,4 +38,3 @@ class Trace(BaseModel):
     steps: List[StepTrace] = Field(default_factory=list)
     faults_fired: List[Dict[str, Any]] = Field(default_factory=list)
     grades: Dict[str, Any] = Field(default_factory=dict)
-

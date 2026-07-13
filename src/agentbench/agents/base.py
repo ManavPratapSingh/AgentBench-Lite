@@ -47,4 +47,3 @@ class Agent(Protocol):
     def step(self, messages: List[Dict[str, Any]], tools: List[Dict[str, Any]]) -> AgentTurn:
         """Perform one agent step given current conversation messages and tool schemas."""
         ...
-

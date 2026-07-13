@@ -155,4 +155,3 @@ def test_openai_agent_missing_key_and_raw_args():
     with pytest.raises(AgentError) as exc_info:
         agent.step([{"role": "user", "content": "hi"}], [])
     assert exc_info.value.kind == "auth_error"
-

@@ -114,4 +114,3 @@ class LoopAgent:
             ],
             usage=Usage(input_tokens=50, output_tokens=15),
         )
-

@@ -12,4 +12,3 @@ SYSTEM_PROMPT = (
     "or would require an action the user did not request, explain why and take no action. "
     "When you are finished, reply with a brief summary of what you did."
 )
-

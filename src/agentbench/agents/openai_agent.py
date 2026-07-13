@@ -93,4 +93,3 @@ class OpenAIAgent:
         )
 
         return AgentTurn(text=text, tool_calls=tool_calls, usage=usage, latency_ms=latency)
-

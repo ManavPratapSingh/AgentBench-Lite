@@ -95,3 +95,4 @@ class FaultInjector:
         if status_code == 503:
             return {"error": "unavailable"}
         return {"error": "error"}
+

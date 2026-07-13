@@ -205,3 +205,4 @@ class ToolRegistry:
             else:
                 defs.append({"name": name, "description": description, "parameters": schema})
         return defs
+
