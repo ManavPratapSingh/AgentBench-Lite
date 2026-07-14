@@ -39,18 +39,33 @@ components:
       - FaultInjector, FaultConfig
 
   agents:
-    status: planned (Phase 3)
+    status: completed (Phase 3)
     owns:
-      - provider adapters (OpenAI / Anthropic)
-      - scripted agents (oracle, noop, overeager, loop)
-      - record/replay cassettes
+      - provider adapter (OpenAIAgent via stdlib urllib)
+      - scripted test doubles (ScriptedAgent, NoopAgent, OvereagerAgent, LoopAgent)
+      - agent turn protocol (Agent, AgentTurn, ToolCall, Usage)
+      - fixed system prompt (SYSTEM_PROMPT, PROMPT_VERSION)
+    depends_on:
+      - pydantic
+    exposes:
+      - Agent, AgentTurn, ToolCall, Usage, AgentError
+      - ScriptedAgent, NoopAgent, OvereagerAgent, LoopAgent, OpenAIAgent
 
   runner:
-    status: planned (Phase 3/5)
+    status: completed (Phase 3)
     owns:
-      - step limit and loop detection
-      - execution loop
-      - trace generation
+      - multi-turn execution loop (run_task)
+      - limit enforcement (max_steps, max_tool_calls, max_total_tokens)
+      - loop detection (3 consecutive identical calls)
+      - trace generation (Trace, StepTrace, ToolCallRecord)
+    depends_on:
+      - environment
+      - tool_layer
+      - agents
+      - scenarios
+    exposes:
+      - run_task
+      - Trace, StepTrace, ToolCallRecord
 
   graders:
     status: planned (Phase 4)

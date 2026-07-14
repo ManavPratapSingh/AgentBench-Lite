@@ -1,16 +1,19 @@
-current_phase: Phase 2 (Tool Layer: Schemas, Validation & Faults)
+current_phase: Phase 3 (Agent Interface + The Runner Loop)
 status: completed
 recently_modified_modules:
-  - src/agentbench/tools/models.py
-  - src/agentbench/tools/faults.py
-  - src/agentbench/tools/registry.py
-  - src/agentbench/tools/__init__.py
-  - tests/unit/test_tools.py
+  - src/agentbench/agents/base.py
+  - src/agentbench/agents/prompts.py
+  - src/agentbench/agents/scripted.py
+  - src/agentbench/agents/openai_agent.py
+  - src/agentbench/scenarios/schema.py
+  - src/agentbench/runner/trace.py
+  - src/agentbench/runner/loop.py
+  - tests/unit/test_runner.py
 
 current_assumptions:
-  - Pydantic models with extra="forbid" cleanly detect all hallucinated arguments.
-  - Safe faults (commit=False) fail before SQL execution; ambiguous faults (commit=True) execute SQL then return simulated 500/503.
-  - Seed-derived SHA256 PRNG ensures 100% deterministic fault injection.
+  - The harness owns termination; zero tool calls indicates final answer.
+  - Repeating the identical tool, canonical args, and result body 3 consecutive times indicates an unrecoverable model loop.
+  - Scripted test doubles permit complete verification of runner rules without live model tokens.
 
 next_step:
-  - Phase 3: Agent interface + the runner loop (AgentTurn protocol, ScriptedAgent, OpenAI adapter, execution loop with loop & step limits).
+  - Phase 4: Scenarios & Graders (SQL state-diff grader, step efficiency, contract violations, recovery grader, scenario templates).

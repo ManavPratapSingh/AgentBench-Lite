@@ -25,3 +25,8 @@ conventions:
     determinism: "SHA256(scenario_seed:tool:count) seeds isolated random.Random"
     semantics: "commit=False aborts before SQL; commit=True executes then reports error"
 
+  agent_loop:
+    termination_ownership: "The harness owns termination, not the agent, via a closed reason set"
+    loop_detection: "3 consecutive identical (tool, canonical_args, result_body) triggers termination"
+    test_doubles: "ScriptedAgent enables offline CI and unit testing of harness itself without API keys"
+

@@ -34,3 +34,17 @@
 - **Trade-offs:** Ambiguous failures require agents to verify database state before retrying, making scenario evaluation realistic.
 - **Status:** Active
 
+### D-006: Harness Ownership of Run Termination
+- **Context:** Agents can hallucinate loops, stall, or refuse to stop. If an agent manages its own lifecycle, broken agents run forever or exhaust budgets.
+- **Decision:** The runner loop strictly dictates termination using a closed set of reasons (`final_answer`, `max_steps`, `max_tool_calls`, `token_budget`, `loop`, `agent_error`, `harness_error`).
+- **Alternatives Considered:** Letting agents declare when they are stuck; arbitrary timeout threads.
+- **Trade-offs:** Enforces deterministic stopping conditions, making test runs predictable and finite.
+- **Status:** Active
+
+### D-007: Stdlib Urllib for OpenAI-Compatible Adapter
+- **Context:** The harness needs an adapter for OpenAI chat completions, but importing the heavy `openai` package brings dozens of transitive dependencies.
+- **Decision:** Implement `OpenAIAgent` using Python's stdlib `urllib.request`.
+- **Alternatives Considered:** Adding `openai>=1.0` dependency.
+- **Trade-offs:** Zero extra dependencies, minimal footprint, and direct control over payload formatting and JSON error translation.
+- **Status:** Active
+

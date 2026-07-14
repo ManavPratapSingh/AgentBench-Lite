@@ -28,3 +28,12 @@ ErrorClass:
 AmbiguousFault:
   meaning: "A fault with commit=true where database mutation succeeds but the tool returns a simulated 500/503."
 
+AgentTurn:
+  meaning: "The result of one inference step by an agent, containing optional text, tool calls, and token usage."
+
+LoopDetection:
+  meaning: "Harness safeguard that stops execution when the same (tool, canonical_args) with identical result body executes 3 times consecutively."
+
+ScriptedAgent:
+  meaning: "A deterministic test-double agent playing back fixed tool calls to evaluate harness functionality without API keys."
+

@@ -22,3 +22,7 @@ fault_counter_scope:
   pitfall: "Fault counters must track all calls to a tool, even schema-invalid ones, otherwise an agent's retry timing shifts."
   prevention: "Increment call_counts[tool_name] unconditionally on every invocation before returning SCHEMA_VIOLATION."
 
+loop_detection_scope:
+  pitfall: "Checking only tool name for loops causes false termination on pagination or multi-entity loops."
+  prevention: "Loop signature must check (tool, canonical_args, result_body) triplet matching 3 consecutive times."
+

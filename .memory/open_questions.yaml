@@ -1,4 +1,4 @@
-- question: "Which LLM provider adapter should be implemented first in Phase 3?"
-  context: "OpenAI vs Anthropic API - OpenAI format is standard across most local mocks and tools."
-- question: "Should loop detection trigger on exact message repetition or on exact (tool, canonical_args) triplets?"
-  context: "SPEC.md §8.1 specifies same (tool, canonical_args) with identical result body 3 times consecutively."
+- question: "How should read-only scenario answers be matched against agent final text?"
+  context: "SPEC.md §11.2 allows contains_all list of strings or regex against final_text."
+- question: "What is the optimal threshold for redundant call detection in Phase 4?"
+  context: "Redundant calls are defined as identical (tool, canonical_args) with no mutating call in between."

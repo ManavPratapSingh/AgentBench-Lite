@@ -19,3 +19,12 @@ It replaces brittle and expensive LLM-as-judge grading with exact SQLite state a
   - Deterministic seeded fault injection with per-tool call counters, support for `commit: false` and `commit: true` ambiguous failures.
   - Zero unhandled exceptions returned to callers on agent mistakes.
 
+- **Agent Interface & Runner Loop (Phase 3)**:
+  - `Agent` protocol and `AgentTurn` / `ToolCall` / `Usage` models.
+  - Standardized `SYSTEM_PROMPT` and `PROMPT_VERSION = "1"`.
+  - Test doubles: `ScriptedAgent` (oracle player), `NoopAgent`, `OvereagerAgent`, `LoopAgent`.
+  - `OpenAIAgent` adapter implemented cleanly via stdlib `urllib.request`.
+  - Multi-turn execution loop `run_task` enforcing limits (`max_steps`, `max_tool_calls`, `max_total_tokens`).
+  - 3-consecutive-call loop detection over `(tool, canonical_args, result_body)`.
+  - Closed set of termination reasons and complete `Trace` serialization.
+

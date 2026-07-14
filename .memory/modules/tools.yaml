@@ -27,3 +27,4 @@ invariants_and_constraints:
   - commit=False faults abort execution before database mutation (safe to retry)
   - commit=True faults execute against database then return simulated error (ambiguous failure)
   - Mutated flag is True only if a mutating tool (transfer, update_status, send_notification) succeeded
+
