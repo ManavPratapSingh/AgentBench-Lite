@@ -112,4 +112,3 @@ def grade_state_and_answer(
         passed=passed,
         details=details,
     )
-

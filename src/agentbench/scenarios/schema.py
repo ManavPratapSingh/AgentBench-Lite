@@ -35,3 +35,5 @@ class Scenario(BaseModel):
     limits: ScenarioLimits = Field(default_factory=ScenarioLimits)
     expected: ScenarioExpected = Field(default_factory=ScenarioExpected)
     oracle: List[Dict[str, Any]] = Field(default_factory=list)
+    oracle_text: Optional[str] = None
+

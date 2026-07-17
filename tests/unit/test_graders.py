@@ -252,4 +252,3 @@ def test_taxonomy_classification_hierarchy():
 
     # 5. default wrong_final_state
     assert classify_failure(scenario, trace, state_clean, ContractGradeResult(), 0, 0) == "wrong_final_state"
-
