@@ -1,4 +1,4 @@
-- question: "How should read-only scenario answers be matched against agent final text?"
-  context: "SPEC.md §11.2 allows contains_all list of strings or regex against final_text."
-- question: "What is the optimal threshold for redundant call detection in Phase 4?"
-  context: "Redundant calls are defined as identical (tool, canonical_args) with no mutating call in between."
+- question: "How should cassettes be named and hashed?"
+  context: "SPEC.md §7.4 specifies key = sha256(canonical_json({model, prompt_version, system, messages, tools, params}))."
+- question: "What thread concurrency pool should be used in Phase 5?"
+  context: "concurrent.futures.ThreadPoolExecutor provides simple, robust isolation when each trial creates its own in-memory SQLite connection."

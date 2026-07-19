@@ -28,3 +28,11 @@ It replaces brittle and expensive LLM-as-judge grading with exact SQLite state a
   - 3-consecutive-call loop detection over `(tool, canonical_args, result_body)`.
   - Closed set of termination reasons and complete `Trace` serialization.
 
+- **Scenarios & Graders (Phase 4)**:
+  - State and answer grader (`grade_state_and_answer`) with SQL row/count checks and `forbidden` side-effect assertions.
+  - Path efficiency grader (`grade_efficiency`) calculating optimal/actual steps and redundant call detection.
+  - Contract grader (`grade_contracts`) auditing schema violations, API errors, and hallucinated IDs.
+  - Recovery grader (`grade_recovery`) measuring safe vs ambiguous fault recovery.
+  - Failure taxonomy (`classify_failure`) with 9-priority root-cause categorization.
+  - 52 deterministic scenarios generated across 8 categories (lookup, multi_hop, conditional_act, aggregate_act, ambiguity, unsolvable, trap, fault), all strictly verified against non-vacuous criteria.
+

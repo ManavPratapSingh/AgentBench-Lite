@@ -25,4 +25,3 @@ invariants_and_constraints:
   - NoopAgent must fail every solvable scenario
   - OvereagerAgent must fail every unsolvable and trap scenario
   - Expected values must be computed by independent SQL on the seeded DB, never by running tools
-

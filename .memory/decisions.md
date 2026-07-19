@@ -48,3 +48,17 @@
 - **Trade-offs:** Zero extra dependencies, minimal footprint, and direct control over payload formatting and JSON error translation.
 - **Status:** Active
 
+### D-008: State-Based Diff Grading Over LLM-as-a-Judge
+- **Context:** LLM-as-judge evaluation is expensive, introduces judge model biases and non-determinism, and struggles to detect subtle side effects.
+- **Decision:** Grade agent success exclusively by SQL assertions on final database rows paired with `forbidden` invariant queries.
+- **Alternatives Considered:** LLM-as-judge reviewing agent message transcripts; string matching on agent summaries.
+- **Trade-offs:** Fast, free, 100% deterministic, and catches unauthorized side effects; cannot evaluate prose eloquence or style.
+- **Status:** Active
+
+### D-009: Independent SQL for Scenario Ground Truth
+- **Context:** Computing expected states by running the mock tool functions risks grading the agent against bugs in the mock tool implementation.
+- **Decision:** Scenario generator computes expected values and assertions using independent raw SQL queries on the seeded database.
+- **Alternatives Considered:** Reusing `api.py` functions to compute expected values.
+- **Trade-offs:** Ensures that mock tool bugs cannot mask evaluation flaws.
+- **Status:** Active
+

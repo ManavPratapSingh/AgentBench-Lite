@@ -26,3 +26,11 @@ loop_detection_scope:
   pitfall: "Checking only tool name for loops causes false termination on pagination or multi-entity loops."
   prevention: "Loop signature must check (tool, canonical_args, result_body) triplet matching 3 consecutive times."
 
+vacuous_scenarios:
+  pitfall: "A scenario where a no-op agent passes is vacuous, falsely inflating benchmark pass rates."
+  prevention: "Always assert NoopAgent fails every solvable scenario and OvereagerAgent fails unsolvable/trap scenarios during validation."
+
+grader_self_grading:
+  pitfall: "Generating expected states using the same tool implementation that is being evaluated circularizes bugs."
+  prevention: "Compute golden values using independent raw SQL against the raw database tables."
+

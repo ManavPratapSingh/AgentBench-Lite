@@ -68,12 +68,37 @@ components:
       - Trace, StepTrace, ToolCallRecord
 
   graders:
-    status: planned (Phase 4)
+    status: completed (Phase 4)
     owns:
-      - SQL final-state evaluation
-      - forbidden side-effect checks
-      - efficiency, contract, and recovery metrics
-      - failure taxonomy
+      - state and answer evaluation (grade_state_and_answer)
+      - step efficiency and redundant call metrics (grade_efficiency)
+      - contract violation and hallucinated ID auditing (grade_contracts)
+      - recovery rate calculation (grade_recovery)
+      - deterministic 9-mode failure taxonomy (classify_failure)
+    depends_on:
+      - runner
+      - scenarios
+    exposes:
+      - grade_state_and_answer, StateGradeResult
+      - grade_efficiency
+      - grade_contracts, ContractGradeResult
+      - grade_recovery
+      - classify_failure
+
+  scenarios:
+    status: completed (Phase 4)
+    owns:
+      - declarative YAML schema (Scenario, ScenarioExpected, ScenarioLimits)
+      - loader and validator (load_scenario, validate_scenario)
+      - deterministic generator across 8 categories (generate_scenario_set)
+    depends_on:
+      - environment
+      - agents
+      - runner
+    exposes:
+      - Scenario, ScenarioExpected
+      - load_scenario, load_scenario_dir, validate_scenario
+      - generate_scenario_set
 
 request_flow:
   - Scenario (YAML)

@@ -1,19 +1,21 @@
-current_phase: Phase 3 (Agent Interface + The Runner Loop)
+current_phase: Phase 4 (Scenarios & Graders)
 status: completed
 recently_modified_modules:
-  - src/agentbench/agents/base.py
-  - src/agentbench/agents/prompts.py
-  - src/agentbench/agents/scripted.py
-  - src/agentbench/agents/openai_agent.py
+  - src/agentbench/graders/state.py
+  - src/agentbench/graders/efficiency.py
+  - src/agentbench/graders/contracts.py
+  - src/agentbench/graders/recovery.py
+  - src/agentbench/graders/taxonomy.py
   - src/agentbench/scenarios/schema.py
-  - src/agentbench/runner/trace.py
-  - src/agentbench/runner/loop.py
-  - tests/unit/test_runner.py
+  - src/agentbench/scenarios/loader.py
+  - src/agentbench/scenarios/generator.py
+  - scenarios/*.yaml (52 scenarios across 8 categories)
+  - tests/unit/test_graders.py
 
 current_assumptions:
-  - The harness owns termination; zero tool calls indicates final answer.
-  - Repeating the identical tool, canonical args, and result body 3 consecutive times indicates an unrecoverable model loop.
-  - Scripted test doubles permit complete verification of runner rules without live model tokens.
+  - Final database state diffs and forbidden side-effect queries eliminate all need for an LLM judge.
+  - All 52 scenarios are validated: oracles pass 100%, NoopAgent fails solvable scenarios, OvereagerAgent fails traps.
+  - Failure taxonomy reliably assigns exactly one category via priority ranking.
 
 next_step:
-  - Phase 4: Scenarios & Graders (SQL state-diff grader, step efficiency, contract violations, recovery grader, scenario templates).
+  - Phase 5: Runner, Record/Replay & Cassettes (VCR-style recording/replay, results.jsonl, cost calculations, concurrency).

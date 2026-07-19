@@ -22,3 +22,4 @@ invariants_and_constraints:
   - Termination reason belongs to closed set: final_answer | max_steps | max_tool_calls | token_budget | loop | agent_error | harness_error
   - Loop detection triggers when the same (tool, canonical_args) with identical result body repeats 3 times consecutively
   - Complete trace records step-by-step latency, token usage, tool arguments, and results
+

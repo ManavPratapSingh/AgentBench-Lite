@@ -24,3 +24,4 @@ invariants_and_constraints:
   - Invalid JSON in tool arguments is captured as {"__raw__": "<string>"} rather than crashing
   - Adapters catch provider HTTP/network errors and raise AgentError(kind=...)
   - No scenario-specific hints may appear in the system prompt
+

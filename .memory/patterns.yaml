@@ -30,3 +30,9 @@ conventions:
     loop_detection: "3 consecutive identical (tool, canonical_args, result_body) triggers termination"
     test_doubles: "ScriptedAgent enables offline CI and unit testing of harness itself without API keys"
 
+  grading:
+    ground_truth: "SQL assertions over final SQLite state diffs, paired with forbidden side-effect queries"
+    non_vacuous_proof: "Every scenario verified that oracle passes, NoopAgent fails, and OvereagerAgent fails traps"
+    independent_oracle: "Expected values computed by direct SQL on seeded data, never by calling tools"
+    taxonomy: "Strict 9-priority failure mode classification (first match wins)"
+

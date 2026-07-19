@@ -37,3 +37,12 @@ LoopDetection:
 ScriptedAgent:
   meaning: "A deterministic test-double agent playing back fixed tool calls to evaluate harness functionality without API keys."
 
+ForbiddenChecks:
+  meaning: "SQL assertions that verify destructive or unauthorized mutations did not occur (e.g. audit_log entries for unwanted actions)."
+
+PathEfficiency:
+  meaning: "The ratio optimal_steps / total_tool_calls (capped at 1.0) achieved on a successfully passed scenario."
+
+FailureTaxonomy:
+  meaning: "A deterministic 9-mode priority classification identifying the exact root cause of a failed trial."
+
