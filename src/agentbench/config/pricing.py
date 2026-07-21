@@ -38,4 +38,3 @@ def calculate_cost(
     # ponytail: exact dollar calculation per million tokens
     cost = (input_tokens * in_rate + output_tokens * out_rate) / 1_000_000.0
     return round(cost, 6)
-

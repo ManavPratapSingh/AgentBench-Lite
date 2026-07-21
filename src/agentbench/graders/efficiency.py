@@ -50,3 +50,4 @@ def grade_efficiency(
         efficiency = min(1.0, scenario.expected.optimal_steps / total_calls)
 
     return efficiency, redundant_calls
+

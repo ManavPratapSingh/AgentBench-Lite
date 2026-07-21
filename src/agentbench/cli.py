@@ -76,6 +76,9 @@ def generate_scenarios(
 
 def _resolve_agent(agent_spec: str, scenario: Scenario, cassette_dir: str, record: bool, replay: bool):
     """Factory creating an Agent instance from spec string."""
+    if replay:
+        return ReplayAgent(model_name=agent_spec, cassette_dir=cassette_dir)
+
     if agent_spec == "scripted:oracle":
         calls = [
             ToolCall(id=f"c_{i}", name=step["tool"], arguments=step.get("args", {}))
@@ -94,13 +97,9 @@ def _resolve_agent(agent_spec: str, scenario: Scenario, cassette_dir: str, recor
     else:
         raise ValueError(f"Unknown agent spec: '{agent_spec}'")
 
-    if replay and not agent_spec.startswith("scripted:"):
-        return ReplayAgent(model_name=agent_spec, cassette_dir=cassette_dir)
-
     if record:
         return RecordingAgent(inner=agent, cassette_dir=cassette_dir)
     return agent
-
 
 
 @app.command()
@@ -137,65 +136,9 @@ def run(
     typer.echo(f"Results written to: {out}/results.jsonl")
 
 
-@app.command()
-def report(
-    run_dir: str = typer.Argument(..., help="Path to run directory containing results.jsonl"),
-    out: Optional[str] = typer.Option(None, "--out", "-o", help="Optional output path for report.md"),
-) -> None:
-    """Generate markdown report from a benchmark run directory."""
-    from agentbench.report.aggregate import aggregate_run
-    from agentbench.report.markdown import generate_markdown_report
-
-    path = Path(run_dir)
-    if not path.is_dir():
-        typer.secho(f"Run directory not found: {run_dir}", fg=typer.colors.RED)
-        raise typer.Exit(code=1)
-
-    summary = aggregate_run(path)
-    md = generate_markdown_report(summary)
-
-    out_file = Path(out) if out else path / "report.md"
-    out_file.write_text(md, encoding="utf-8")
-    typer.secho(f"Report written to: {out_file}", fg=typer.colors.GREEN)
-
-    hl = summary.headline
-    typer.echo(
-        f"Agent: {summary.header.get('agent')} | "
-        f"Pass Rate: {hl.pass_rate:.1%} ({hl.passed_trials}/{hl.eval_trials}) | "
-        f"Latency p50: {hl.latency_p50:.1f}ms"
-    )
-
-
-@app.command()
-def compare(
-    run_a: str = typer.Argument(..., help="Path to baseline run directory (Run A)"),
-    run_b: str = typer.Argument(..., help="Path to candidate run directory (Run B)"),
-    out: Optional[str] = typer.Option(None, "--out", "-o", help="Optional output file for comparison markdown"),
-) -> None:
-    """Compare two benchmark runs side-by-side."""
-    from agentbench.report.compare import compare_runs
-
-    path_a = Path(run_a)
-    path_b = Path(run_b)
-    if not path_a.is_dir():
-        typer.secho(f"Run directory A not found: {run_a}", fg=typer.colors.RED)
-        raise typer.Exit(code=1)
-    if not path_b.is_dir():
-        typer.secho(f"Run directory B not found: {run_b}", fg=typer.colors.RED)
-        raise typer.Exit(code=1)
-
-    comp_md = compare_runs(path_a, path_b)
-    if out:
-        Path(out).write_text(comp_md, encoding="utf-8")
-        typer.secho(f"Comparison report written to: {out}", fg=typer.colors.GREEN)
-
-    typer.echo(comp_md)
-
-
 def main():
     app()
 
 
 if __name__ == "__main__":
     main()
-

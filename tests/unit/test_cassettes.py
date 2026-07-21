@@ -64,4 +64,3 @@ def test_pricing_calculation():
 
     # Unknown model returns None
     assert calculate_cost("unknown:model", 100, 100) is None
-

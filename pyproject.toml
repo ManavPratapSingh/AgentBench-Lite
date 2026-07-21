@@ -20,6 +20,9 @@ dev = [
     "pytest>=7.0",
 ]
 
+[project.scripts]
+agentbench = "agentbench.cli:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 

@@ -82,3 +82,4 @@ def grade_contracts(scenario: Scenario, trace: Trace) -> ContractGradeResult:
         api_5xx=api_5xx,
         hallucinated_ids=hallucinated_ids,
     )
+

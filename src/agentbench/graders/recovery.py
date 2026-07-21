@@ -51,3 +51,4 @@ def grade_recovery(
 
     recovery_rate = faults_recovered / faults_fired if faults_fired > 0 else None
     return faults_fired, faults_recovered, recovery_rate
+

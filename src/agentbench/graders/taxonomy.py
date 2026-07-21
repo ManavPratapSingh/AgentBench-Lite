@@ -76,3 +76,4 @@ def classify_failure(
 
     # 9. wrong_final_state (default)
     return "wrong_final_state"
+
