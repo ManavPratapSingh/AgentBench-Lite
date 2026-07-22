@@ -27,3 +27,4 @@ invariants_and_constraints:
   - Efficiency is defined only for passed trials; failed trials report None
   - Redundant calls count identical read signatures without intervening state mutation
   - Failure taxonomy applies a 9-rung priority hierarchy where first match wins
+

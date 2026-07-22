@@ -62,3 +62,18 @@
 - **Trade-offs:** Ensures that mock tool bugs cannot mask evaluation flaws.
 - **Status:** Active
 
+### D-010: SHA-256 Cassette Keys and Pinned Replay Latencies
+- **Context:** Live LLM evaluations cost money and exhibit network latency jitter, violating NFR-1 (bit-for-bit identical results on replay).
+- **Decision:** Hash canonical compact JSON `(messages, tools)` to SHA-256 keys. In replay mode, replace live provider calls with cassette lookup and clamp latency to `0.0 ms`.
+- **Alternatives Considered:** Storing wall-clock timestamps or variable replay delays.
+- **Trade-offs:** Pinning replay latency to 0.0 ms makes benchmark comparisons deterministic down to the SHA-256 digest of `results.jsonl`, but loses wall-clock profiling during replay.
+- **Status:** Active
+
+### D-011: Isolated In-Memory SQLite per Worker Thread
+- **Context:** Multi-threaded runner concurrency (`ThreadPoolExecutor`) needs to scale evaluation speed without cross-thread SQLite locking or state corruption.
+- **Decision:** Rather than sharing a database connection with locks, each trial in every worker thread creates and seeds its own `:memory:` SQLite connection via `seed(scenario.seed)`.
+- **Alternatives Considered:** Single shared in-memory SQLite with table prefixes or mutex locks; on-disk SQLite with WAL mode.
+- **Trade-offs:** Zero lock contention, linear multi-core speedup, and total state isolation per trial.
+- **Status:** Active
+
+

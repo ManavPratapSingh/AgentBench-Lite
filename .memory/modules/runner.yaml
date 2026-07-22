@@ -7,19 +7,27 @@ owns:
   - Concurrency safety and isolated database allocation per trial
   - 3-consecutive call loop detection
   - Trace serialization (Trace, StepTrace, ToolCallRecord)
+  - Multi-worker parallel trial runner (ThreadPoolExecutor pool in run_suite)
+  - Result row generation and streaming to results.jsonl and traces.jsonl
+  - Dollar cost calculation via pricing config table
 
 depends_on:
   - agentbench.env.seed
   - agentbench.tools.registry
   - agentbench.agents.base
   - agentbench.scenarios.schema
+  - agentbench.graders
 
 entry_points:
   - run_task(scenario: Scenario, agent: Agent, trial: int, run_id: str, conn: Optional[sqlite3.Connection]) -> tuple[Trace, sqlite3.Connection]
+  - run_single_trial(scenario: Scenario, agent: Agent, trial: int, run_id: str, pricing_table: dict, replay: bool) -> tuple[ResultRow, Trace]
+  - run_suite(scenarios: list[Scenario], agent: Agent, num_trials: int, run_id: str, output_dir: Path, concurrency: int, pricing_table: dict, replay: bool) -> list[ResultRow]
 
 invariants_and_constraints:
   - The harness, not the agent, owns trial termination
   - Termination reason belongs to closed set: final_answer | max_steps | max_tool_calls | token_budget | loop | agent_error | harness_error
   - Loop detection triggers when the same (tool, canonical_args) with identical result body repeats 3 times consecutively
   - Complete trace records step-by-step latency, token usage, tool arguments, and results
+  - Replay mode guarantees byte-for-byte identical results.jsonl output by pinning latency_ms to 0.0
+
 

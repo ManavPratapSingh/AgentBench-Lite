@@ -36,3 +36,14 @@ It replaces brittle and expensive LLM-as-judge grading with exact SQLite state a
   - Failure taxonomy (`classify_failure`) with 9-priority root-cause categorization.
   - 52 deterministic scenarios generated across 8 categories (lookup, multi_hop, conditional_act, aggregate_act, ambiguity, unsolvable, trap, fault), all strictly verified against non-vacuous criteria.
 
+- **Runner Pool, Record/Replay & CLI (Phase 5)**:
+  - Model pricing configuration (`config/models.yaml`, `calculate_cost`).
+  - SHA-256 canonical message/tools hashing for replay keys (`compute_cassette_key`).
+  - `RecordingAgent` and `ReplayAgent` wrappers for recording live completions and offline replay.
+  - Byte-for-byte replay determinism via pinned 0.0 ms replay latency.
+  - Multi-worker concurrent trial runner (`run_suite` with `ThreadPoolExecutor`).
+  - Thread-isolated in-memory SQLite per trial.
+  - Unified Typer CLI (`agentbench seed`, `agentbench validate-scenarios`, `agentbench generate-scenarios`, `agentbench run`).
+
+
+

@@ -52,19 +52,25 @@ components:
       - ScriptedAgent, NoopAgent, OvereagerAgent, LoopAgent, OpenAIAgent
 
   runner:
-    status: completed (Phase 3)
+    status: completed (Phase 3 & Phase 5)
     owns:
       - multi-turn execution loop (run_task)
       - limit enforcement (max_steps, max_tool_calls, max_total_tokens)
       - loop detection (3 consecutive identical calls)
       - trace generation (Trace, StepTrace, ToolCallRecord)
+      - parallel execution harness (ThreadPoolExecutor pool in run_suite)
+      - record/replay cassette adapter (RecordingAgent, ReplayAgent)
+      - model pricing calculations (load_pricing_table, calculate_cost)
+      - CLI entry point (Typer CLI with seed-cmd, validate-scenarios, generate-scenarios, run)
     depends_on:
       - environment
       - tool_layer
       - agents
       - scenarios
+      - graders
     exposes:
       - run_task
+      - run_suite, run_single_trial, ResultRow
       - Trace, StepTrace, ToolCallRecord
 
   graders:

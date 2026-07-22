@@ -1,21 +1,19 @@
-current_phase: Phase 4 (Scenarios & Graders)
+current_phase: Phase 5 (Runner Pool, Record/Replay & CLI)
 status: completed
 recently_modified_modules:
-  - src/agentbench/graders/state.py
-  - src/agentbench/graders/efficiency.py
-  - src/agentbench/graders/contracts.py
-  - src/agentbench/graders/recovery.py
-  - src/agentbench/graders/taxonomy.py
-  - src/agentbench/scenarios/schema.py
-  - src/agentbench/scenarios/loader.py
-  - src/agentbench/scenarios/generator.py
-  - scenarios/*.yaml (52 scenarios across 8 categories)
-  - tests/unit/test_graders.py
+  - config/models.yaml
+  - src/agentbench/config/pricing.py
+  - src/agentbench/agents/cassette.py
+  - src/agentbench/runner/pool.py
+  - src/agentbench/cli.py
+  - tests/unit/test_cassettes.py
+  - tests/unit/test_pool.py
 
 current_assumptions:
-  - Final database state diffs and forbidden side-effect queries eliminate all need for an LLM judge.
-  - All 52 scenarios are validated: oracles pass 100%, NoopAgent fails solvable scenarios, OvereagerAgent fails traps.
-  - Failure taxonomy reliably assigns exactly one category via priority ranking.
+  - Cassette hashing over canonical JSON messages and tools is stable across runs.
+  - Pinned 0.0 ms latency in replay mode achieves byte-for-byte reproducibility of results.jsonl (NFR-1).
+  - ThreadPoolExecutor achieves linear scaling since each worker has an isolated in-memory SQLite connection.
 
 next_step:
-  - Phase 5: Runner, Record/Replay & Cassettes (VCR-style recording/replay, results.jsonl, cost calculations, concurrency).
+  - Phase 6: Reporting & Failure Taxonomy (Wilson 95% CI, pass@k, pass^k, percentiles, markdown summary, comparison tool).
+

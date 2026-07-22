@@ -36,3 +36,13 @@ conventions:
     independent_oracle: "Expected values computed by direct SQL on seeded data, never by calling tools"
     taxonomy: "Strict 9-priority failure mode classification (first match wins)"
 
+  record_replay:
+    canonical_hash: "SHA256 over json.dumps({'messages': messages, 'tools': tools}, sort_keys=True, separators=(',', ':'))"
+    zero_latency_contract: "In replay mode, wall-clock latency is clamped to 0.0 ms to ensure byte-level determinism of results.jsonl"
+    no_network: "ReplayAgent intercepts step() and serves strictly from local disk cassette file; misses raise CassetteMiss immediately"
+
+  concurrency:
+    isolation: "Each worker thread in ThreadPoolExecutor seeds a new in-memory SQLite connection; zero shared DB connections"
+    reproducibility: "Result rows are gathered and sorted deterministically by (scenario_id, trial) before writing to JSONL"
+
+
