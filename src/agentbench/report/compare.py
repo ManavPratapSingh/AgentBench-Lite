@@ -107,4 +107,3 @@ def compare_runs(run_a_dir: Path, run_b_dir: Path) -> str:
     lines.append("")
 
     return "\n".join(lines)
-
