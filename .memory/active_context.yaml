@@ -1,19 +1,22 @@
-current_phase: Phase 5 (Runner Pool, Record/Replay & CLI)
+current_phase: Phase 6 (Reporting & Failure Taxonomy)
 status: completed
 recently_modified_modules:
-  - config/models.yaml
-  - src/agentbench/config/pricing.py
-  - src/agentbench/agents/cassette.py
-  - src/agentbench/runner/pool.py
+  - src/agentbench/report/stats.py
+  - src/agentbench/report/aggregate.py
+  - src/agentbench/report/markdown.py
+  - src/agentbench/report/compare.py
+  - src/agentbench/report/__init__.py
   - src/agentbench/cli.py
-  - tests/unit/test_cassettes.py
-  - tests/unit/test_pool.py
+  - tests/golden/run_fixture/
+  - tests/unit/test_stats.py
+  - tests/unit/test_golden_report.py
 
 current_assumptions:
-  - Cassette hashing over canonical JSON messages and tools is stable across runs.
-  - Pinned 0.0 ms latency in replay mode achieves byte-for-byte reproducibility of results.jsonl (NFR-1).
-  - ThreadPoolExecutor achieves linear scaling since each worker has an isolated in-memory SQLite connection.
+  - Wilson score interval provides robust coverage near boundary proportions (0 and 1) for ~50 scenario benchmarks.
+  - Golden snapshot test guarantees markdown report format invariance across code changes.
+  - Comparison utility correctly flags regressions and improvements based on scenario pass status.
 
 next_step:
-  - Phase 6: Reporting & Failure Taxonomy (Wilson 95% CI, pass@k, pass^k, percentiles, markdown summary, comparison tool).
+  - Phase 7: Packaging, CI, Polish & Capstone (Makefile, Dockerfile, docker-compose.yml, GitHub Actions, README, and CAPSTONE.md).
+
 

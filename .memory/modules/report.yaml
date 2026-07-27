@@ -25,4 +25,3 @@ invariants_and_constraints:
   - Uses exact nearest-rank percentiles for latency p50, p95, p99
   - Markdown report conforms strictly to 6-section specification in SPEC §12.2
   - Golden snapshot test in tests/golden/run_fixture guarantees report format stability
-

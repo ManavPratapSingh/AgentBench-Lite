@@ -106,12 +106,28 @@ components:
       - load_scenario, load_scenario_dir, validate_scenario
       - generate_scenario_set
 
+  reporting:
+    status: completed (Phase 6)
+    owns:
+      - statistical metrics (Wilson score CI, pass@k, pass^k, nearest-rank percentiles)
+      - run aggregation (results.jsonl + manifest.json -> RunSummary)
+      - markdown report formatting (report.md with 6 mandatory sections)
+      - run comparison and regression/improvement tracking (compare_runs)
+    depends_on:
+      - runner
+    exposes:
+      - wilson_ci, pass_at_k, pass_power_k, percentile
+      - aggregate_run, RunSummary, HeadlineStats
+      - generate_markdown_report
+      - compare_runs
+
 request_flow:
   - Scenario (YAML)
-  - Runner
-  - Agent Turn (emits tool calls)
+  - Runner (ThreadPoolExecutor pool)
+  - Agent Turn (emits tool calls or cassette lookup)
   - Tool Registry (Pydantic validation -> Fault Injector -> Mock API)
   - SQLite (in-memory per trial)
   - Graders (evaluates DB diff & trace)
-  - Result JSONL & Report Markdown
+  - Results JSONL (ResultRow)
+  - Aggregator & Markdown Report (report.md, compare delta)
 

@@ -76,4 +76,19 @@
 - **Trade-offs:** Zero lock contention, linear multi-core speedup, and total state isolation per trial.
 - **Status:** Active
 
+### D-012: Wilson Score Interval for Small-Sample Pass Rates
+- **Context:** Standard normal approximation intervals ($p \pm z \sqrt{p(1-p)/N}$) fail on small sample sizes ($N \approx 50$) or extreme proportions ($p \approx 0$ or $p \approx 1$), producing intervals that exceed $[0, 1]$ or collapse to zero width.
+- **Decision:** Implement the Wilson score interval in `report/stats.py::wilson_ci` with exact analytic formulation.
+- **Alternatives Considered:** Normal approximation; Clopper-Pearson exact interval; importing `scipy.stats`.
+- **Trade-offs:** Zero external dependencies (pure math stdlib), robust behavior near 0 and 1, and standard for binomial benchmarks.
+- **Status:** Active
+
+### D-013: Golden Snapshot Testing for Benchmark Reports
+- **Context:** Benchmark reports must have stable headings, tables, and formats across version upgrades so external dashboards and users do not break.
+- **Decision:** Commit a fixed fixture run with its expected `report.md` in `tests/golden/run_fixture/` and verify via `test_golden_report_snapshot()`.
+- **Alternatives Considered:** Ad-hoc regex testing of markdown text.
+- **Trade-offs:** Catches subtle layout regressions or formatting drift immediately on `pytest`.
+- **Status:** Active
+
+
 

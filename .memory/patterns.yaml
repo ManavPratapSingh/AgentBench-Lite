@@ -45,4 +45,11 @@ conventions:
     isolation: "Each worker thread in ThreadPoolExecutor seeds a new in-memory SQLite connection; zero shared DB connections"
     reproducibility: "Result rows are gathered and sorted deterministically by (scenario_id, trial) before writing to JSONL"
 
+  reporting:
+    confidence_interval: "Wilson score 95% interval for binomial pass rate proportions"
+    pass_metrics: "pass@k (1 - C(n-c, k)/C(n, k)) and pass^k (C(c, k)/C(n, k)) averaged over scenarios"
+    percentiles: "Nearest-rank method r = ceil(p / 100 * N) for latency distributions"
+    golden_verification: "Fixed fixture run verified against committed report.md in tests/golden/run_fixture"
+
+
 
