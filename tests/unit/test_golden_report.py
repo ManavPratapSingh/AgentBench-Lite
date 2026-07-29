@@ -46,3 +46,4 @@ def test_cli_report_and_compare(tmp_path: Path):
     res_compare = runner.invoke(app, ["compare", str(golden_dir), str(golden_dir)])
     assert res_compare.exit_code == 0
     assert "Benchmark Comparison" in res_compare.stdout
+

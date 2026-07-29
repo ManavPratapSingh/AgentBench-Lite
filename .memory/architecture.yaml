@@ -121,6 +121,20 @@ components:
       - generate_markdown_report
       - compare_runs
 
+  packaging_and_ci:
+    status: completed (Phase 7)
+    owns:
+      - container image definition (Dockerfile, non-root appuser)
+      - local container orchestration (docker-compose.yml)
+      - standard lifecycle task runner (Makefile: setup, test, validate, bench-replay)
+      - CI automation and regression gate (.github/workflows/ci.yml)
+    depends_on:
+      - runner
+      - reporting
+    exposes:
+      - make targets (setup, test, validate, bench-replay, bench, report, docker)
+      - docker image (agentbench-lite:latest)
+
 request_flow:
   - Scenario (YAML)
   - Runner (ThreadPoolExecutor pool)
@@ -130,4 +144,5 @@ request_flow:
   - Graders (evaluates DB diff & trace)
   - Results JSONL (ResultRow)
   - Aggregator & Markdown Report (report.md, compare delta)
+
 

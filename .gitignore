@@ -11,3 +11,6 @@ build/
 runs/
 cassettes/
 
+docs/
+DOCS/PLAN.md
+.agent/

@@ -47,4 +47,3 @@ jobs:
         with:
           name: benchmark-report-py${{ matrix.python-version }}
           path: runs/ci_replay/report.md
-

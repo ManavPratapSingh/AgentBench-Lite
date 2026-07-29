@@ -105,3 +105,4 @@ def generate_markdown_report(summary: RunSummary) -> str:
     lines.append("")
 
     return "\n".join(lines)
+

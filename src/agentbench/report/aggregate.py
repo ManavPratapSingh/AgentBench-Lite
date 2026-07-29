@@ -350,3 +350,4 @@ def aggregate_run(run_dir: Path) -> RunSummary:
         worst_scenarios=worst_scenarios,
         repro_command=repro_cmd,
     )
+

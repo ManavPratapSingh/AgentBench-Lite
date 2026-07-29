@@ -71,3 +71,4 @@ def test_percentile_nearest_rank():
     assert percentile(data, 0) == 15.0
     # empty
     assert percentile([], 50) == 0.0
+

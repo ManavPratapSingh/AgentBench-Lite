@@ -6,6 +6,7 @@ owns:
   - Hardened Docker image definition (Dockerfile with non-root appuser)
   - Local multi-service composition (docker-compose.yml)
   - GitHub Actions matrix testing pipeline (.github/workflows/ci.yml)
+  - Root project documentation (README.md) and capstone synthesis (docs/explainer/CAPSTONE.md)
 
 depends_on:
   - agentbench.cli
@@ -26,4 +27,3 @@ invariants_and_constraints:
   - Offline replay mode requires zero network access (hermetic and reproducible in CI)
   - Scenario validation runs automatically before tests in CI
   - Benchmark reports are uploaded as GitHub Actions artifacts on every run
-

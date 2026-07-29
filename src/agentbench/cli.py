@@ -76,9 +76,6 @@ def generate_scenarios(
 
 def _resolve_agent(agent_spec: str, scenario: Scenario, cassette_dir: str, record: bool, replay: bool):
     """Factory creating an Agent instance from spec string."""
-    if replay:
-        return ReplayAgent(model_name=agent_spec, cassette_dir=cassette_dir)
-
     if agent_spec == "scripted:oracle":
         calls = [
             ToolCall(id=f"c_{i}", name=step["tool"], arguments=step.get("args", {}))
@@ -97,9 +94,13 @@ def _resolve_agent(agent_spec: str, scenario: Scenario, cassette_dir: str, recor
     else:
         raise ValueError(f"Unknown agent spec: '{agent_spec}'")
 
+    if replay and not agent_spec.startswith("scripted:"):
+        return ReplayAgent(model_name=agent_spec, cassette_dir=cassette_dir)
+
     if record:
         return RecordingAgent(inner=agent, cassette_dir=cassette_dir)
     return agent
+
 
 
 @app.command()

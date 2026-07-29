@@ -90,5 +90,20 @@
 - **Trade-offs:** Catches subtle layout regressions or formatting drift immediately on `pytest`.
 - **Status:** Active
 
+### D-014: Non-Root Execution in Benchmark Container
+- **Context:** Running containers as root creates container-breakout security risks, especially in multi-tenant or shared CI infrastructure.
+- **Decision:** Create and enforce an unprivileged user `appuser` (UID 1000) in `Dockerfile`.
+- **Alternatives Considered:** Default root user execution.
+- **Trade-offs:** Requires careful volume permissions handling in `docker-compose.yml`, but aligns with container hardening standards.
+- **Status:** Active
+
+### D-015: Scripted Test Double Cassette Bypass in Replay Mode
+- **Context:** Test double agents (`ScriptedAgent`, `NoopAgent`, `OvereagerAgent`) are already 100% deterministic, in-process, and offline. Forcing them through `ReplayAgent` in replay mode requires creating redundant cassette files on disk.
+- **Decision:** In `src/agentbench/cli.py::_resolve_agent`, allow scripted agents to execute directly without cassette lookup when `--replay` is set.
+- **Alternatives Considered:** Generating fake cassette files for scripted agents.
+- **Trade-offs:** Keeps test double runs zero-footprint and instant while reserving cassettes for external LLM models.
+- **Status:** Active
+
+
 
 

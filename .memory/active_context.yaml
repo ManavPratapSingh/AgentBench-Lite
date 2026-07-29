@@ -1,22 +1,21 @@
-current_phase: Phase 6 (Reporting & Failure Taxonomy)
-status: completed
+current_phase: Phase 7 (Packaging, CI, Polish & Capstone)
+status: project_complete
 recently_modified_modules:
-  - src/agentbench/report/stats.py
-  - src/agentbench/report/aggregate.py
-  - src/agentbench/report/markdown.py
-  - src/agentbench/report/compare.py
-  - src/agentbench/report/__init__.py
-  - src/agentbench/cli.py
-  - tests/golden/run_fixture/
-  - tests/unit/test_stats.py
-  - tests/unit/test_golden_report.py
+  - Makefile
+  - Dockerfile
+  - docker-compose.yml
+  - .github/workflows/ci.yml
+  - README.md
+  - docs/explainer/07-packaging-and-ci.md
+  - docs/explainer/CAPSTONE.md
 
 current_assumptions:
-  - Wilson score interval provides robust coverage near boundary proportions (0 and 1) for ~50 scenario benchmarks.
-  - Golden snapshot test guarantees markdown report format invariance across code changes.
-  - Comparison utility correctly flags regressions and improvements based on scenario pass status.
+  - All 7 phases of the AgentBench-Lite specification and plan are 100% complete and verified.
+  - Replay benchmark runs are 100% byte-for-byte reproducible (NFR-1).
+  - All 42 unit tests pass and all 52 scenarios meet strict non-vacuous validation criteria.
 
 next_step:
-  - Phase 7: Packaging, CI, Polish & Capstone (Makefile, Dockerfile, docker-compose.yml, GitHub Actions, README, and CAPSTONE.md).
+  - None (Project fully completed).
+
 
 

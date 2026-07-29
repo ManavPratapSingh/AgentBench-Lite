@@ -87,3 +87,4 @@ def percentile(data: Sequence[float], p: float) -> float:
     rank = math.ceil((p / 100.0) * n)
     idx = max(0, min(n - 1, rank - 1))
     return float(sorted_data[idx])
+

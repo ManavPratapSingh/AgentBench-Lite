@@ -97,3 +97,4 @@ class ReplayAgent:
         turn_dict = data["turn"]
         # In replay mode, latency is fixed to cassette's recorded latency (or 0.0)
         return AgentTurn.model_validate(turn_dict)
+

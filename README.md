@@ -117,4 +117,3 @@ The validator automatically verifies:
 1. **Dialect Scope**: Sandboxes use SQLite in-memory connections; Postgres-specific dialect features (e.g. `JSONB` indexes or `RETURNING` clauses with CTEs) are not supported.
 2. **Deterministic Replay Clamping**: In replay mode, latency is pinned to `0.0 ms` to enforce cryptographic byte-identity on `results.jsonl`, which removes wall-clock network profiling during offline replays.
 3. **Single Process Concurrency**: `ThreadPoolExecutor` parallelizes across Python worker threads with thread-isolated SQLite connections; multi-node distributed scheduling (Ray / Slurm) requires external orchestrators.
-

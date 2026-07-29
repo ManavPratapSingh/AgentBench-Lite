@@ -45,12 +45,13 @@ It replaces brittle and expensive LLM-as-judge grading with exact SQLite state a
   - Thread-isolated in-memory SQLite per trial.
   - Unified Typer CLI (`agentbench seed`, `agentbench validate-scenarios`, `agentbench generate-scenarios`, `agentbench run`).
 
-- **Reporting & Failure Taxonomy (Phase 6)**:
-  - Statistical foundation (`stats.py`): Wilson 95% score CI, pass@k, pass^k, nearest-rank percentiles (p50/p95/p99).
-  - Run aggregation (`aggregate.py`): groups metrics by difficulty and category, aggregates failure taxonomy, extracts 5 worst scenarios with trace excerpts.
-  - Markdown report generation (`markdown.py`): 6-section formatted `report.md`.
-  - Side-by-side run comparison (`compare.py`): calculates deltas on all headline metrics and enumerates regressions / improvements.
-  - Golden snapshot testing (`tests/golden/run_fixture/`): fixture run verified against committed `report.md`.
+- **Packaging, CI & Polish (Phase 7)**:
+  - Standard lifecycle task runner (`Makefile`): `setup`, `test`, `validate`, `bench-replay`, `bench`, `report`, `docker`.
+  - Secure containerization (`Dockerfile`): unprivileged user `appuser` (UID 1000), Python 3.12-slim base, zero-network offline replay support.
+  - Multi-service compose (`docker-compose.yml`): mounting runs and cassettes volumes.
+  - GitHub Actions matrix workflow (`.github/workflows/ci.yml`): Python 3.11 & 3.12 automated validation, pytest execution, offline replay benchmark, and artifact upload.
+  - Comprehensive documentation (`README.md`) and synthesis log (`docs/explainer/CAPSTONE.md`).
+
 
 
 

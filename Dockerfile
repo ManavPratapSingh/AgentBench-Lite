@@ -31,4 +31,3 @@ USER appuser
 # Default entrypoint runs the offline replay suite
 ENTRYPOINT ["agentbench"]
 CMD ["--help"]
-

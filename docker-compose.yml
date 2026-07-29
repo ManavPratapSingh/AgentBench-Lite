@@ -9,4 +9,3 @@ services:
       - ./runs:/app/runs
       - ./cassettes:/app/cassettes
     command: ["run", "--agent", "scripted:oracle", "--scenarios", "scenarios/", "--trials", "1", "--replay", "--out", "runs/docker_replay"]
-

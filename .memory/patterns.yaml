@@ -51,5 +51,11 @@ conventions:
     percentiles: "Nearest-rank method r = ceil(p / 100 * N) for latency distributions"
     golden_verification: "Fixed fixture run verified against committed report.md in tests/golden/run_fixture"
 
+  packaging:
+    non_root: "Dockerfile enforces unprivileged appuser (UID 1000) for secure container execution"
+    layer_caching: "pyproject.toml installed before src/ copying to optimize Docker build speed"
+    offline_ci: "GitHub Actions executes bench-replay in hermetic offline environment with zero API costs"
+
+
 
 
