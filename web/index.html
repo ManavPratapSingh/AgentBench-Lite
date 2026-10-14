@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgentBench-Lite | Deterministic LLM Agent Benchmark & Evaluation Harness</title>
+  <meta name="description" content="A hermetic, reproducible evaluation harness measuring tool efficiency, fault recovery, and forbidden side-effect resistance across 52 scenarios.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <div class="brand">
+        <span class="logo-badge">AB-LITE</span>
+        <span class="brand-title">AgentBench-Lite</span>
+        <span class="badge-status">
+          <span class="badge-pulse"></span>
+          Hermetic & Deterministic
+        </span>
+      </div>
+      <nav class="nav-links">
+        <a href="#architecture">Architecture</a>
+        <a href="#scoreboard">Scoreboard</a>
+        <a href="#scenarios">Scenarios</a>
+        <a href="#simulator">Simulator</a>
+        <a href="https://github.com/manav/AgentBench-Lite" target="_blank" rel="noopener noreferrer">GitHub Repo ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero-tag">Production-Grade LLM Evaluation</span>
+      <h1>Deterministic LLM Agent Benchmark & Evaluation Harness</h1>
+      <p class="lead">
+        A hermetic evaluation framework measuring agent tool efficiency, fault recovery, and forbidden side-effect resistance across 52 realistic scenarios with zero mock leakage and 100% reproducible grading.
+      </p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-val emerald">52</div>
+          <div class="stat-label">Scenarios</div>
+          <div class="stat-sub">8 realistic real-world categories</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val blue">0.00%</div>
+          <div class="stat-label">Harness Flakiness</div>
+          <div class="stat-sub">Isolated SQLite sandbox per trial</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">4</div>
+          <div class="stat-label">Agent Baselines</div>
+          <div class="stat-sub">Oracle, GPT-4o-mini, Overeager, Noop</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val amber">9</div>
+          <div class="stat-label">Failure Modes</div>
+          <div class="stat-sub">Rigorous automated error taxonomy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Architecture Section -->
+  <section id="architecture">
+    <div class="container">
+      <div class="section-header">
+        <h2>Evaluation Engine Architecture</h2>
+        <p>Inspect how AgentBench-Lite guarantees reproducibility, fault tolerance, and safe execution without live network access.</p>
+      </div>
+
+      <div class="architecture-tabs" id="arch-tabs">
+        <button class="arch-tab-btn active" data-tab="sandbox">Hermetic Sandbox</button>
+        <button class="arch-tab-btn" data-tab="taxonomy">9-Class Failure Taxonomy</button>
+        <button class="arch-tab-btn" data-tab="faults">Fault Injection Engine</button>
+        <button class="arch-tab-btn" data-tab="metrics">Statistical Metrics & Pass@k</button>
+      </div>
+
+      <div class="arch-display-box" id="arch-content">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Scoreboard Section -->
+  <section id="scoreboard">
+    <div class="container">
+      <div class="section-header">
+        <h2>Benchmark Scoreboard</h2>
+        <p>Comparative evaluation across 52 scenarios evaluating precision, cost, latency, and resistance to traps.</p>
+      </div>
+
+      <div class="scoreboard-grid" id="scoreboard-grid">
+        <!-- Agent cards injected via JavaScript -->
+      </div>
+
+      <!-- Taxonomy Breakdown -->
+      <div class="taxonomy-box" id="taxonomy-box">
+        <h3>Failure Taxonomy Breakdown (openai:gpt-4o-mini vs Baselines)</h3>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+          Where state-of-the-art LLMs stumble: trap scenarios trigger unauthorized state mutations (<code style="color:var(--accent-rose)">forbidden_side_effect</code>), while complex queries cause parameter guessing (<code style="color:var(--accent-amber)">hallucinated_id</code>).
+        </p>
+        <div class="taxonomy-bars" id="taxonomy-bars">
+          <!-- Taxonomy bars injected via JavaScript -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scenario Explorer Section -->
+  <section id="scenarios">
+    <div class="container">
+      <div class="section-header">
+        <h2>Scenario Explorer & Trace Inspector</h2>
+        <p>Filter scenarios by capability, search prompts, and view turn-by-turn agent tool traces with mock API payloads.</p>
+      </div>
+
+      <div class="filters-bar">
+        <div class="pills-group" id="category-pills">
+          <button class="filter-pill active" data-category="all">All (52)</button>
+          <button class="filter-pill" data-category="lookup">Lookup (6)</button>
+          <button class="filter-pill" data-category="multi_hop">Multi-Hop (8)</button>
+          <button class="filter-pill" data-category="conditional_act">Conditional (8)</button>
+          <button class="filter-pill" data-category="aggregate_act">Aggregate (6)</button>
+          <button class="filter-pill" data-category="ambiguity">Ambiguity (4)</button>
+          <button class="filter-pill" data-category="unsolvable">Unsolvable (5)</button>
+          <button class="filter-pill" data-category="trap">Trap (5)</button>
+          <button class="filter-pill" data-category="fault">Fault (10)</button>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <select id="difficulty-select" class="sim-select" style="padding: 7px 12px; font-size: 13px;">
+            <option value="all">All Difficulties</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+          <input type="text" id="scenario-search" class="search-input" placeholder="Search scenarios, tools, IDs...">
+        </div>
+      </div>
+
+      <div class="scenarios-grid" id="scenarios-grid">
+        <!-- Scenario cards injected via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Sandbox Simulator Section -->
+  <section id="simulator">
+    <div class="container">
+      <div class="section-header">
+        <h2>Interactive Harness Simulator</h2>
+        <p>Test the AgentBench-Lite grading engine right in your browser. Execute actions, inspect database diffs, and watch safety checks trigger.</p>
+      </div>
+
+      <div class="sim-container">
+        <div class="sim-controls">
+          <div>
+            <label style="display:block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">Select Evaluation Scenario</label>
+            <select id="sim-scenario-select" class="sim-select">
+              <option value="trap-001">trap-001: VIP User Suspension Trap</option>
+              <option value="fault-002">fault-002: Transient 429 Rate Limit Recovery</option>
+              <option value="lookup-001">lookup-001: Clean Single-Hop Customer Lookup</option>
+              <option value="unsolvable-001">unsolvable-001: Refund on Non-Existent Order</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display:block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">Simulated Action Pattern</label>
+            <select id="sim-action-select" class="sim-select">
+              <!-- Options populated by simulator JS -->
+            </select>
+          </div>
+
+          <div style="align-self: flex-end;">
+            <button id="sim-run-btn" class="btn-primary" style="height: 38px;">▶ Run Evaluation Trial</button>
+          </div>
+        </div>
+
+        <div class="sim-grid">
+          <!-- Left: Simulation Execution Trace -->
+          <div>
+            <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-primary); display: flex; justify-content: space-between;">
+              <span>Execution Turn & Tool Stream</span>
+              <span id="sim-tool-status" style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);"></span>
+            </h4>
+            <div id="sim-trace-feed" class="code-preview" style="min-height: 240px; max-height: 320px; overflow-y: auto;">
+              <!-- Simulated trace output -->
+            </div>
+          </div>
+
+          <!-- Right: Grader State Verification & Verdict -->
+          <div>
+            <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-primary);">
+              Database State Diff & Grader Verdict
+            </h4>
+            <div id="sim-verdict-box" style="background-color: #0d131f; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 16px; min-height: 240px; font-size: 13px;">
+              <!-- Verdict and diff details -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trace Inspector Modal -->
+  <div class="modal-overlay" id="trace-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px;">
+            <span id="modal-scenario-id" class="sc-id" style="font-size: 18px;">scenario-id</span>
+            <span id="modal-category-badge" class="tag-badge tag-category">Category</span>
+            <span id="modal-difficulty-badge" class="tag-badge tag-easy">Easy</span>
+          </div>
+          <p id="modal-scenario-prompt" style="font-size: 14px; color: var(--text-secondary);"></p>
+        </div>
+        <button class="modal-close" id="modal-close-btn">&times;</button>
+      </div>
+
+      <!-- Agent Switcher Inside Modal -->
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+        <span style="font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Agent Trace:</span>
+        <div class="pills-group" id="modal-agent-tabs">
+          <button class="filter-pill active" data-agent="scripted:oracle">Oracle (100%)</button>
+          <button class="filter-pill" data-agent="openai:gpt-4o-mini">GPT-4o-mini (65.4%)</button>
+          <button class="filter-pill" data-agent="scripted:overeager">Overeager (0%)</button>
+          <button class="filter-pill" data-agent="scripted:noop">Noop (0%)</button>
+        </div>
+      </div>
+
+      <!-- Run Result Summary Bar -->
+      <div id="modal-result-bar" style="background-color: var(--bg-card); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+        <!-- Injected -->
+      </div>
+
+      <!-- Steps List -->
+      <div id="modal-steps-list">
+        <!-- Injected -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p style="margin-bottom: 8px;"><strong>AgentBench-Lite</strong> &mdash; Production LLM Agent Evaluation Benchmark & Harness</p>
+      <p>Built with zero external frontend dependencies. 100% Hermetic & Replay-Verifiable.</p>
+      <p style="margin-top: 12px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">
+        CLI Repro: <code>agentbench run --agent openai:gpt-4o-mini --scenarios scenarios/ --replay</code>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+

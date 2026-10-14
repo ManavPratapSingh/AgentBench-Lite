@@ -5,6 +5,23 @@
 
 ---
 
+## 🌐 Interactive Web Showcase & Evaluator UI
+
+A zero-dependency client-side dashboard is included in [`web/`](web/) so evaluators and interviewers can explore benchmark results, inspect turn-by-turn agent traces, and run interactive harness simulations directly in their browser without setting up a Python environment:
+
+- **Interactive Architecture**: Deep dive into hermetic sandboxing, fault injection, and the 9-class failure taxonomy.
+- **Benchmark Scoreboard**: Wilson score 95% confidence intervals, tool efficiency ratios, token/cost tracking, and error breakdowns across 4 baselines (`oracle`, `gpt-4o-mini`, `overeager`, `noop`).
+- **Scenario Explorer & Trace Inspector**: Filter and search all 52 scenarios with full turn-by-turn tool arguments, mock responses, and failure mode diffs.
+- **In-Browser Sandbox Simulator**: Live sandbox where you can trigger traps (VIP suspension), inject transient 429 rate limits, and test SQL invariant verification in real time.
+
+```bash
+# Serve locally with zero build tools or dependencies:
+make serve
+# Open http://localhost:8000 in your browser
+```
+
+---
+
 ## Architecture Overview
 
 ```mermaid

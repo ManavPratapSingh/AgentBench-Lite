@@ -1,4 +1,4 @@
-.PHONY: help setup test lint validate bench bench-replay report docker clean
+.PHONY: help setup test lint validate bench bench-replay report docker web-bundle serve clean
 
 PYTHON ?= .venv/bin/python3
 PIP ?= .venv/bin/pip
@@ -14,6 +14,8 @@ help:
 	@echo "  bench-replay  Run offline benchmark replay with zero network"
 	@echo "  bench         Run live benchmark suite"
 	@echo "  report        Generate report for the latest replay run"
+	@echo "  web-bundle    Bundle run data and scenarios into web/data.js"
+	@echo "  serve         Serve web showcase at http://localhost:8000"
 	@echo "  docker        Build non-root Docker container image"
 	@echo "  clean         Remove build artifacts and temporary run files"
 
@@ -39,6 +41,12 @@ bench:
 
 report:
 	$(PYTHON) -m agentbench.cli report runs/bench_replay
+
+web-bundle:
+	$(PYTHON) scripts/bundle_web_data.py
+
+serve:
+	$(PYTHON) -m http.server -d web 8000
 
 docker:
 	docker build -t agentbench-lite:latest .
