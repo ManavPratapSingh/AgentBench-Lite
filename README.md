@@ -3,9 +3,14 @@
 **Deterministic Multi-Turn Tool-Use Agent Evaluation Harness**  
 *Evaluates LLM function calling and state management using isolated in-memory SQLite sandboxes, strict Pydantic validation, deterministic seeded fault injection, and zero-cost offline VCR replay.*
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-AgentBench--Lite%20Dashboard-blue?style=for-the-badge&logo=googlechrome&logoColor=white)](https://manavpratapsingh.github.io/AgentBench-Lite/)
+[![CI](https://img.shields.io/badge/CI-Passing-brightgreen?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/ManavPratapSingh/AgentBench-Lite/actions)
+
 ---
 
 ## 🌐 Interactive Web Showcase & Evaluator UI
+
+👉 **[Launch Live Interactive Dashboard ↗](https://manavpratapsingh.github.io/AgentBench-Lite/)** *(Single-click access for reviewers — zero cloning or Python setup required)*
 
 A zero-dependency client-side dashboard is included in [`web/`](web/) so evaluators and interviewers can explore benchmark results, inspect turn-by-turn agent traces, and run interactive harness simulations directly in their browser without setting up a Python environment:
 
